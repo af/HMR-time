@@ -1,0 +1,21 @@
+{
+  "name": "frontendscaffold",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "6to5-core": "^3.5.3",
+    "6to5-loader": "^3.0.0",
+    "autoprefixer-stylus": "^0.5.0",
+    "css-loader": "^0.9.1",
+    "extract-text-webpack-plugin": "^0.3.8",
+    "style-loader": "^0.8.3",
+    "stylus-loader": "^0.5.0",
+    "webpack": "^1.5.3"
+  },
+  "scripts": {
+    "watch": "webpack --watch"
+  },
+  "author": "Aaron Franks (http://aaronfranks.com/)",
+  "license": "ISC"
+}
