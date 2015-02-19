@@ -13,8 +13,11 @@
     "stylus-loader": "^0.5.0",
     "webpack": "^1.5.3"
   },
+  "devDependencies": {
+    "webpack-dev-server": "^1.7.0"
+  },
   "scripts": {
-    "watch": "webpack --watch"
+    "watch": "webpack-dev-server --hot --public-path /assets/"
   },
   "author": "Aaron Franks (http://aaronfranks.com/)",
   "license": "ISC"

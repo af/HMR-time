@@ -21,6 +21,6 @@ module.exports = {
 
     stylus: { use: [autoprefixer()] },
     plugins: [
-        new ExtractTextPlugin("main.css", { allChunks: true })
+        new ExtractTextPlugin("main.css", { allChunks: true }),
     ]
 }
