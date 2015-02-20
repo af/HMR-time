@@ -7,7 +7,10 @@ var webpack = require('webpack')
 
 var config = require('./webpack.config.js')
 config.plugins.push(new webpack.HotModuleReplacementPlugin())
-config.entry.unshift('webpack/hot/dev-server')
+config.entry.unshift(
+    'webpack-dev-server/client?http://0.0.0.0:8080',
+    'webpack/hot/dev-server'
+)
 
 var server = new WebpackDevServer(webpack(config), {
     // when using webpack-dev-server from the API you need to set the filename property
