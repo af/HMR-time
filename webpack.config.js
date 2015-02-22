@@ -30,8 +30,9 @@ module.exports = {
     },
 
     stylus: { use: [autoprefixer()] },
-    plugins: [
-        // Currently only used in production mode (no HMR):
-        new ExtractTextPlugin('styles', 'styles.css', { allChunks: true }),
-    ]
+    plugins: []
 }
+
+// Currently only used in production mode (without HMR)
+// TODO: prevent styles.js from being created along with styles.css
+if (!DEV_MODE) module.exports.plugins.push(new ExtractTextPlugin('styles.css'))
