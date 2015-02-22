@@ -30,7 +30,7 @@ var server = new WebpackDevServer(webpack(config), {
     noInfo: false,
     lazy: false,        // Note: couldn't get HMR working without lazy:false
     watchDelay: 300,
-    publicPath: '/assets/',
+    publicPath: '/',
     stats: { colors: true }
 })
 
