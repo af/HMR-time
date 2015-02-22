@@ -6,10 +6,13 @@ var WebpackDevServer = require('webpack-dev-server')
 var webpack = require('webpack')
 
 var config = require('./webpack.config.js')
-config.plugins.push(new webpack.HotModuleReplacementPlugin())
+config.plugins.push(
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin()
+)
 config.entry.unshift(
     'webpack-dev-server/client?http://0.0.0.0:8080',
-    'webpack/hot/dev-server'
+    'webpack/hot/only-dev-server'
 )
 
 var server = new WebpackDevServer(webpack(config), {
