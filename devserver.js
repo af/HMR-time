@@ -2,6 +2,8 @@
 // http://webpack.github.io/docs/hot-module-replacement-with-webpack.html
 // http://webpack.github.io/docs/webpack-dev-server.html
 
+process.env.NODE_ENV = 'development'
+
 var WebpackDevServer = require('webpack-dev-server')
 var webpack = require('webpack')
 
@@ -10,10 +12,15 @@ config.plugins.push(
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
 )
-config.entry.unshift(
-    'webpack-dev-server/client?http://0.0.0.0:8080',
-    'webpack/hot/only-dev-server'
-)
+
+var entries = Object.keys(config.entry);
+entries.forEach(function(e) {
+    // Assumes each entry points to an array for now:
+    config.entry[e].unshift(
+        'webpack-dev-server/client?http://0.0.0.0:8080',
+        'webpack/hot/only-dev-server'
+    )
+})
 
 var server = new WebpackDevServer(webpack(config), {
     // when using webpack-dev-server from the API you need to set the filename property

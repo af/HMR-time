@@ -3,10 +3,20 @@
 
 var path = require('path')
 var autoprefixer = require('autoprefixer-stylus')
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var DEV_MODE = (process.env.NODE_ENV === 'development')
+
+// Use a different loading strategy for stylus in dev mode
+// This enables HMR; see github.com/webpack/extract-text-webpack-plugin/issues/30
+var stylusLoader = DEV_MODE ?
+    'style-loader!css-loader!stylus-loader' :
+    ExtractTextPlugin.extract('style-loader', 'css-loader!stylus-loader')
 
 module.exports = {
-    entry: ['./styles/main.styl', './js/entry.js'],
+    entry: {
+        app: ['./js/entry.js'],
+        styles: ['./styles/main.styl'], // Build css as separate bundle for production
+    },
     output: {
         path: path.join(__dirname, 'assets'),
         filename: '[name].js'
@@ -14,13 +24,14 @@ module.exports = {
 
     module: {
         loaders: [
-              { test: /\.js$/, exclude: /node_modules/, loaders: ['react-hot', '6to5-loader']},
-              { test: /\.styl$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader!stylus-loader") }
+            { test: /\.js$/, exclude: /node_modules/, loaders: ['react-hot', '6to5-loader']},
+            { test: /\.styl$/, loader: stylusLoader }
         ]
     },
 
     stylus: { use: [autoprefixer()] },
     plugins: [
-        new ExtractTextPlugin("main.css", { allChunks: true }),
+        // Currently only used in production mode (no HMR):
+        new ExtractTextPlugin('styles', 'styles.css', { allChunks: true }),
     ]
 }
