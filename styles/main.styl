@@ -3,3 +3,30 @@
 
 body
     font-family: sans-serif
+
+ul
+    margin: 1rem 0
+    padding: 0
+
+form
+    display: flex
+    height: 3rem
+
+    input, button
+        font-size: 1.2rem
+        padding: 0.5rem
+
+    input
+        flex: 1
+
+.item
+    padding: 0.5rem
+    border-bottom: 1px dotted #ccc
+    transition: opacity 0.3s
+
+    &.done
+        opacity: 0.5
+        text-decoration: line-through
+
+    input[type=checkbox]
+        margin-right: 0.5rem
