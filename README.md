@@ -1,6 +1,6 @@
 # Stop: HMR Time!
 
-This repo is the culmination of my experiments with [webpack](http://webpack.github.io/),
+This repo is an experiment with [webpack](http://webpack.github.io/),
 and more specifically its [Hot Module Replacement
 (HMR](http://webpack.github.io/docs/hot-module-replacement-with-webpack.html) feature.
 
@@ -11,7 +11,7 @@ In development, HMR automagically syncs your front-end code with your browser
   [autoprefixer](https://github.com/postcss/autoprefixer)
 * [React.js](http://facebook.github.io/react/) components, via
   [react-hot-loader](https://github.com/gaearon/react-hot-loader)
-    * [Babeljs](https://babeljs.io) is also included for ES6 support
+    * [Babeljs](https://babeljs.io) is also used for ES6 support
 
 
 ## Usage
