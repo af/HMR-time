@@ -5,6 +5,9 @@ let d = require('jsnox')(React)
 let idCounter = 1
 let ListForm = React.createClass({
     displayName: 'ListForm',
+    propTypes: {
+        onNewItem: React.PropTypes.func.isRequired
+    },
 
     onSubmit(evt) {
         evt.preventDefault()
@@ -27,16 +30,15 @@ let ListForm = React.createClass({
 
 let ListItem = React.createClass({
     displayName: 'ListItem',
-
-    toggleDone() {
-        this.props.item.done = !this.props.item.done
-        this.forceUpdate()  // FIXME: have parent re-render instead
+    propTypes: {
+        item: React.PropTypes.object.isRequired,
+        onDone: React.PropTypes.func.isRequired
     },
 
     render() {
         let item = this.props.item
-        return d('li.item', { className: item.done ? 'done' : '' }, [
-            d('input:checkbox', { checked: item.done, onChange: this.toggleDone }),
+        return d('li.item', { className: item.done && 'done', onClick: this.props.onDone }, [
+            d('input:checkbox', { checked: item.done, }),
             item.text
         ])
     }
@@ -50,6 +52,11 @@ let ListApp = React.createClass({
         return { items: [] }
     },
 
+    onItemDone(item) {
+        item.done = !item.done
+        this.forceUpdate()  // this is hacky, but it's just a demo
+    },
+
     onNewItem(item) {
         this.setState({ items: this.state.items.concat([item]) })
     },
@@ -58,7 +65,13 @@ let ListApp = React.createClass({
         return d('div.wrap', [
             d('h1', 'Yet another TODO demo'),
             d(ListForm, { onNewItem: this.onNewItem }),
-            d('ul', this.state.items.map(i => d(ListItem, { item: i, key: i.id })))
+            d('ul', this.state.items.map(i => {
+                return d(ListItem, {
+                    item: i,
+                    key: i.id,
+                    onDone: this.onItemDone.bind(this, i)
+                })
+            }))
         ])
     }
 })
