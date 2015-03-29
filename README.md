@@ -39,4 +39,3 @@ In development, HMR automagically syncs your front-end code with your browser
 ## TODO
 
 * Conditional usage of css require (based on NODE_ENV)
-* vendor bundle splitting

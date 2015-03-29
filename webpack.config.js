@@ -1,6 +1,7 @@
 // Info on splitting css into separate files:
 // http://webpack.github.io/docs/stylesheets.html
 
+var webpack = require('webpack')
 var path = require('path')
 var autoprefixer = require('autoprefixer-stylus')
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -16,6 +17,7 @@ module.exports = {
     entry: {
         app: ['./js/entry.js'],
         styles: ['./styles/main.styl'], // Build css as separate bundle for production
+        vendor: ['react', 'jsnox'],
     },
     output: {
         path: path.join(__dirname, 'assets'),
@@ -30,7 +32,9 @@ module.exports = {
     },
 
     stylus: { use: [autoprefixer()] },
-    plugins: []
+    plugins: [
+        new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js')
+    ]
 }
 
 // Currently only used in production mode (without HMR)
