@@ -1,8 +1,8 @@
+let Immutable = require('immutable')
 let React = require('react')
 let d = require('jsnox')(React)
 
 
-let idCounter = 1
 let ListForm = React.createClass({
     displayName: 'ListForm',
     propTypes: {
@@ -13,7 +13,7 @@ let ListForm = React.createClass({
         evt.preventDefault()
 
         let inputEl = this.refs.text.getDOMNode()
-        let newItem = { id: idCounter++, text: inputEl.value, done: false }
+        let newItem = { text: inputEl.value, done: false }
         this.props.onNewItem(newItem)
         inputEl.focus()
         inputEl.value = ''
@@ -32,13 +32,13 @@ let ListItem = React.createClass({
     displayName: 'ListItem',
     propTypes: {
         item: React.PropTypes.object.isRequired,
-        onDone: React.PropTypes.func.isRequired
+        toggleDone: React.PropTypes.func.isRequired
     },
 
     render() {
-        let item = this.props.item
-        return d('li.item', { className: item.done && 'done', onClick: this.props.onDone }, [
-            d('input:checkbox', { checked: item.done, }),
+        let item = this.props.item.toObject()
+        return d('li.item', { className: item.done && 'done', onClick: this.props.toggleDone }, [
+            d('input:checkbox', { checked: item.done, readOnly: true }),
             item.text
         ])
     }
@@ -49,27 +49,28 @@ let ListApp = React.createClass({
     displayName: 'SimpleForm',
 
     getInitialState() {
-        return { items: [] }
+        return { items: Immutable.List() }
     },
 
-    onItemDone(item) {
-        item.done = !item.done
-        this.forceUpdate()  // this is hacky, but it's just a demo
+    toggleDone(item, index) {
+        let updatedItems = this.state.items.updateIn([index, 'done'], d => !d)
+        this.setState({ items: updatedItems })
     },
 
     onNewItem(item) {
-        this.setState({ items: this.state.items.concat([item]) })
+        let newList = this.state.items.push(Immutable.fromJS(item))
+        this.setState({ items: newList })
     },
 
     render() {
         return d('div.wrap', [
             d('h1', 'Yet another TODO demo'),
             d(ListForm, { onNewItem: this.onNewItem }),
-            d('ul', this.state.items.map(i => {
+            d('ul', this.state.items.toArray().map((i, idx) => {
                 return d(ListItem, {
                     item: i,
-                    key: i.id,
-                    onDone: this.onItemDone.bind(this, i)
+                    key: idx,
+                    toggleDone: this.toggleDone.bind(this, i, idx)
                 })
             }))
         ])

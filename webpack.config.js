@@ -17,7 +17,7 @@ module.exports = {
     entry: {
         app: ['./js/entry.js'],
         styles: ['./styles/main.styl'], // Build css as separate bundle for production
-        vendor: ['react', 'jsnox'],
+        vendor: ['react', 'jsnox', 'immutable'],
     },
     output: {
         path: path.join(__dirname, 'assets'),

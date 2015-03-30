@@ -9,6 +9,7 @@
     "babel-loader": "4.2.0",
     "css-loader": "^0.9.1",
     "extract-text-webpack-plugin": "^0.3.8",
+    "immutable": "3.7.1",
     "jsnox": "1.0.0",
     "react": "0.13.1",
     "style-loader": "^0.8.3",
